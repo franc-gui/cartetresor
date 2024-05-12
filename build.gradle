@@ -1,0 +1,45 @@
+plugins {
+    id 'java'
+    id 'jacoco'
+    id 'org.springframework.boot' version "${spring_boot_version}"
+    id 'io.spring.dependency-management' version "${spring_dependency_management_version}"
+    id "io.freefair.lombok" version "${lombok_version}"
+}
+
+group = 'com.carbonit'
+version = '0.0.1'
+
+java {
+    sourceCompatibility = '21'
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation group: 'commons-io', name: 'commons-io', version: "${common_io_version}"
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: "${apache_commons_lang_version}"
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation "org.mockito:mockito-core:${mockito_core_version}"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junit_api_version}"
+    testImplementation "org.junit.jupiter:junit-jupiter-engine:${junit_api_version}"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:${junit_api_version}"
+    testImplementation "com.tngtech.archunit:archunit-junit5:${archunit_api_version}"
+    testImplementation "com.tngtech.archunit:archunit-junit5-engine:${archunit_engine_version}"
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
